@@ -1,0 +1,12 @@
+.vscode/**
+.vscode-test/**
+node_modules/**
+.gitignore
+.gitattributes
+.git/**
+**/*.map
+**/.DS_Store
+**/.eslintrc*
+*.vsix
+test/**
+images/raw/**

@@ -1,0 +1,38 @@
+{
+  "name": "gero-asm",
+  "displayName": "Gero Assembly",
+  "description": "Syntax highlighting and editor support for the Gero VM assembly language (.gas).",
+  "version": "0.1.0",
+  "publisher": "salty-max",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Programming Languages"],
+  "keywords": ["gero", "assembly", "vm", "asm", "gas"],
+  "homepage": "https://github.com/salty-max/gero",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salty-max/vscode-gero"
+  },
+  "bugs": {
+    "url": "https://github.com/salty-max/gero/issues"
+  },
+  "license": "MIT",
+  "contributes": {
+    "languages": [
+      {
+        "id": "gero-asm",
+        "aliases": ["Gero Assembly", "gero-asm"],
+        "extensions": [".gas"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "gero-asm",
+        "scopeName": "source.gero-asm",
+        "path": "./grammars/gero-asm.tmLanguage.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Gero Assembly",
+  "scopeName": "source.gero-asm",
+  "fileTypes": ["gas"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#labels" },
+    { "include": "#directives" },
+    { "include": "#string-literal" },
+    { "include": "#char-literal" },
+    { "include": "#hex-number" },
+    { "include": "#address" },
+    { "include": "#register-ptr" },
+    { "include": "#register" },
+    { "include": "#symbol-ref" },
+    { "include": "#cast" },
+    { "include": "#mnemonics" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "comments": {
+      "name": "comment.line.semicolon.gero-asm",
+      "match": ";.*$"
+    },
+    "labels": {
+      "patterns": [
+        {
+          "match": "^\\s*(\\.)([A-Za-z_][A-Za-z0-9_]*)\\s*(:)",
+          "captures": {
+            "1": { "name": "punctuation.definition.label.local.gero-asm" },
+            "2": { "name": "entity.name.function.label.local.gero-asm" },
+            "3": { "name": "punctuation.separator.label.gero-asm" }
+          }
+        },
+        {
+          "match": "^\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*(:)",
+          "captures": {
+            "1": { "name": "entity.name.function.label.gero-asm" },
+            "2": { "name": "punctuation.separator.label.gero-asm" }
+          }
+        }
+      ]
+    },
+    "directives": {
+      "patterns": [
+        {
+          "match": "\\b(const|data8|data16|struct|reserve)\\b",
+          "name": "storage.type.directive.gero-asm"
+        },
+        {
+          "match": "\\b(org|bank|sram_banks|include)\\b",
+          "name": "keyword.other.directive.gero-asm"
+        }
+      ]
+    },
+    "string-literal": {
+      "name": "string.quoted.double.gero-asm",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.gero-asm",
+          "match": "\\\\[nrt0'\\\\\"]"
+        }
+      ]
+    },
+    "char-literal": {
+      "name": "string.quoted.single.gero-asm",
+      "match": "'(?:\\\\[nrt0'\\\\\"]|[^'\\\\\\n])'"
+    },
+    "hex-number": {
+      "name": "constant.numeric.hex.gero-asm",
+      "match": "\\$[0-9A-Fa-f]{1,4}\\b"
+    },
+    "address": {
+      "name": "constant.numeric.address.gero-asm",
+      "match": "&[0-9A-Fa-f]{1,4}\\b"
+    },
+    "register-ptr": {
+      "match": "(&)\\b(ip|acu|sp|fp|mb|im|r[1-8])\\b",
+      "captures": {
+        "1": { "name": "keyword.operator.address-of.gero-asm" },
+        "2": { "name": "variable.language.register.gero-asm" }
+      }
+    },
+    "register": {
+      "name": "variable.language.register.gero-asm",
+      "match": "\\b(ip|acu|sp|fp|mb|im|r[1-8])\\b"
+    },
+    "symbol-ref": {
+      "match": "(@)([A-Za-z_][A-Za-z0-9_]*)",
+      "captures": {
+        "1": { "name": "punctuation.definition.variable.gero-asm" },
+        "2": { "name": "variable.other.constant.gero-asm" }
+      }
+    },
+    "cast": {
+      "match": "(<)([A-Za-z_][A-Za-z0-9_]*)(>)\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*(\\.)\\s*([A-Za-z_][A-Za-z0-9_]*)",
+      "captures": {
+        "1": { "name": "punctuation.definition.cast.begin.gero-asm" },
+        "2": { "name": "entity.name.type.gero-asm" },
+        "3": { "name": "punctuation.definition.cast.end.gero-asm" },
+        "4": { "name": "variable.other.object.gero-asm" },
+        "5": { "name": "punctuation.accessor.gero-asm" },
+        "6": { "name": "variable.other.property.gero-asm" }
+      }
+    },
+    "mnemonics": {
+      "patterns": [
+        {
+          "comment": "Control flow — jumps, calls, interrupts, halts.",
+          "name": "keyword.control.gero-asm",
+          "match": "\\b(jmp|jeq|jne|jlt|jgt|jle|jge|jz|jnz|jcc|jcs|jvc|jvs|jr|djnz|call|ret|int|rti|brk|hlt|nop)\\b"
+        },
+        {
+          "comment": "Data movement (longest forms first).",
+          "name": "keyword.operator.move.gero-asm",
+          "match": "\\b(mov8|movh|movl|mov|push|pop|swap|bcpy)\\b"
+        },
+        {
+          "comment": "Arithmetic ALU.",
+          "name": "keyword.operator.arithmetic.gero-asm",
+          "match": "\\b(adc|sbc|divs|add|sub|mul|div|neg|inc|dec)\\b"
+        },
+        {
+          "comment": "Bitwise + shift.",
+          "name": "keyword.operator.bitwise.gero-asm",
+          "match": "\\b(shl|shr|rol|ror|and|or|xor|not)\\b"
+        },
+        {
+          "comment": "Compare / test / bit.",
+          "name": "keyword.operator.test.gero-asm",
+          "match": "\\b(cmp|tst|bset)\\b"
+        },
+        {
+          "comment": "Flag control.",
+          "name": "keyword.other.flag.gero-asm",
+          "match": "\\b(clc|sec|cli|sei|clv)\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.assignment.gero-asm",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.arithmetic.gero-asm",
+          "match": "[+\\-*]"
+        }
+      ]
+    }
+  }
+}

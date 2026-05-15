@@ -51,6 +51,10 @@
         {
           "match": "\\b(org|bank|sram_banks|include)\\b",
           "name": "keyword.other.directive.gero-asm"
+        },
+        {
+          "match": "\\b(ifdef|ifndef|endif)\\b",
+          "name": "keyword.control.preprocessor.gero-asm"
         }
       ]
     },

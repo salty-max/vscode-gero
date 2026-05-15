@@ -113,9 +113,9 @@
     "mnemonics": {
       "patterns": [
         {
-          "comment": "Control flow — jumps, calls, interrupts, halts.",
+          "comment": "Control flow — jumps, calls, interrupts, halts. bank_call / bank_jump are cross-bank pseudo-instructions (asm-side sugar).",
           "name": "keyword.control.gero-asm",
-          "match": "\\b(jmp|jeq|jne|jlt|jgt|jle|jge|jz|jnz|jcc|jcs|jvc|jvs|jr|djnz|call|ret|int|rti|brk|hlt|nop)\\b"
+          "match": "\\b(bank_call|bank_jump|jmp|jeq|jne|jlt|jgt|jle|jge|jz|jnz|jcc|jcs|jvc|jvs|jr|djnz|call|ret|int|rti|brk|hlt|nop)\\b"
         },
         {
           "comment": "Data movement (longest forms first).",

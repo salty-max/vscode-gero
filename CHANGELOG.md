@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 — 2026-05-15
+
+Mnemonic-list sync for the ISA completion sprint — pairs with [salty-max/gero#186](https://github.com/salty-max/gero/pull/186).
+
+- `sext` added to the **arithmetic** group (sign-extension, single-operand). Keeps the same `keyword.operator.arithmetic` scope as its siblings.
+- `asr` added to the **bitwise + shift** group (arithmetic shift right, preserves sign). Sits next to `shl` / `shr` / `rol` / `ror`.
+- `btest` / `bclr` joined the **compare / test / single-bit ops** group. `bset` was already there (formerly the `bset memset` semantics) and keeps its slot — the asm resolver disambiguates by operand shape, so a single TextMate scope is fine.
+- `bfill` (renamed from the old `bset memset` form) added to the **data movement** group alongside `bcpy` — same `keyword.operator.move` scope as the other block-memory primitive.
+
+Minor bump (not patch) — the literal-set grew by five (one renamed) and one of the new mnemonics (`bfill`) moved category compared to the old `bset memset` form.
+
 ## 0.2.1 — 2026-05-15
 
 Mnemonic-list completion — pairs with [salty-max/gero#179](https://github.com/salty-max/gero/pull/179).

@@ -118,24 +118,24 @@
           "match": "\\b(bank_call|bank_jump|jmp|jeq|jne|jlt|jgt|jle|jge|jz|jnz|jcc|jcs|jvc|jvs|jr|djnz|call|ret|int|rti|brk|hlt|nop)\\b"
         },
         {
-          "comment": "Data movement (longest forms first).",
+          "comment": "Data movement (longest forms first). bcpy + bfill are block-memory primitives.",
           "name": "keyword.operator.move.gero-asm",
-          "match": "\\b(mov8|movh|movl|mov|push|pop|swap|bcpy)\\b"
+          "match": "\\b(mov8|movh|movl|mov|push|pop|swap|bcpy|bfill)\\b"
         },
         {
-          "comment": "Arithmetic ALU.",
+          "comment": "Arithmetic ALU. sext is sign-extension (single-operand).",
           "name": "keyword.operator.arithmetic.gero-asm",
-          "match": "\\b(adc|sbc|divs|add|sub|mul|div|neg|inc|dec)\\b"
+          "match": "\\b(adc|sbc|divs|sext|add|sub|mul|div|neg|inc|dec)\\b"
         },
         {
-          "comment": "Bitwise + shift.",
+          "comment": "Bitwise + shift. asr is arithmetic shift right (preserves sign bit).",
           "name": "keyword.operator.bitwise.gero-asm",
-          "match": "\\b(shl|shr|rol|ror|and|or|xor|not)\\b"
+          "match": "\\b(shl|shr|asr|rol|ror|and|or|xor|not)\\b"
         },
         {
-          "comment": "Compare / test / bit.",
+          "comment": "Compare / test / single-bit ops.",
           "name": "keyword.operator.test.gero-asm",
-          "match": "\\b(cmp|tst|bset)\\b"
+          "match": "\\b(cmp|tst|btest|bset|bclr)\\b"
         },
         {
           "comment": "Flag control.",

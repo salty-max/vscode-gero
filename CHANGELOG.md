@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 — 2026-05-15
+
+Mnemonic-list completion — pairs with [salty-max/gero#179](https://github.com/salty-max/gero/pull/179).
+
+- `bank_call` and `bank_jump` added to the control-flow mnemonic alternation. Both are cross-bank pseudo-instructions in the gero asm — they desugar at assembly time to `mov $bank, mb` + `call`/`jmp <addr>`. Placed in the **control-flow** group (alongside `jmp` / `call`) so they pick up the same `keyword.control` scope and coloration.
+
+Patch bump (not minor) — same scope, just the literal-set in the control-flow pattern grew.
+
 ## 0.2.0 — 2026-05-15
 
 Conditional assembly directives — pairs with [salty-max/gero#177](https://github.com/salty-max/gero/pull/177).

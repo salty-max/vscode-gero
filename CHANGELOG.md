@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.4.0 — 2026-09-08
+
+Adds `.gr` — the extension covered the assembler only until now, so a
+gero-lang buffer opened with no colour.
+
+- Second `contributes.languages` entry for `gero-lang` (`*.gr`, scope
+  `source.gero-lang`) alongside `gero-asm`.
+- New `grammars/gero-lang.tmLanguage.json`: comments, the 42 keywords,
+  the ten writable primitives, annotations in both forms, `$FF` hex /
+  `0b` binary / fixed-point / decimal literals, strings with `$(expr)`
+  interpolation and format specs, char literals, `Enum.Variant` paths,
+  loop labels, and the operator set.
+- `language-configurations/gero-lang.json`: `--` comment toggle,
+  brackets, and indent rules that open on a block head and close on
+  `end` / `else` / `elif` / `until` / `case`.
+- `language-configuration.json` moved to
+  `language-configurations/gero-asm.json` so both languages sit
+  side by side. Internal path only — nothing user-visible changed for
+  `.gas`.
+
+Minor bump: a second language is a new capability, and the config path
+moved.
+
 ## 0.3.0 — 2026-05-15
 
 Mnemonic-list sync for the ISA completion sprint — pairs with [salty-max/gero#186](https://github.com/salty-max/gero/pull/186).

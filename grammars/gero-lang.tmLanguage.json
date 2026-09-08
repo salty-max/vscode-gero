@@ -1,0 +1,381 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "gero-lang",
+  "scopeName": "source.gero-lang",
+  "fileTypes": [
+    "gr"
+  ],
+  "patterns": [
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#annotation"
+    },
+    {
+      "include": "#string"
+    },
+    {
+      "include": "#char"
+    },
+    {
+      "include": "#declaration-name"
+    },
+    {
+      "include": "#variant-path"
+    },
+    {
+      "include": "#type-annotation"
+    },
+    {
+      "include": "#loop-label"
+    },
+    {
+      "include": "#keyword-control"
+    },
+    {
+      "include": "#keyword-declaration"
+    },
+    {
+      "include": "#keyword-operator"
+    },
+    {
+      "include": "#constant"
+    },
+    {
+      "include": "#number"
+    },
+    {
+      "include": "#call"
+    },
+    {
+      "include": "#operator"
+    },
+    {
+      "include": "#punctuation"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.double-dash.gero-lang",
+      "match": "--.*$"
+    },
+    "annotation": {
+      "patterns": [
+        {
+          "match": "(@)([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.annotation.gero-lang"
+            },
+            "2": {
+              "name": "entity.name.function.decorator.gero-lang"
+            }
+          }
+        }
+      ]
+    },
+    "string": {
+      "name": "string.quoted.double.gero-lang",
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.gero-lang"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.gero-lang"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#interpolation"
+        },
+        {
+          "name": "constant.character.escape.gero-lang",
+          "match": "\\\\(?:x[0-9A-Fa-f]{2}|[nrt0\\\\\"$])"
+        }
+      ]
+    },
+    "interpolation": {
+      "name": "meta.embedded.expression.gero-lang",
+      "begin": "\\$\\(",
+      "end": "\\)",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.section.embedded.begin.gero-lang"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.embedded.end.gero-lang"
+        }
+      },
+      "patterns": [
+        {
+          "match": "(:)([0-9]*[A-Za-z])\\s*(?=\\))",
+          "captures": {
+            "1": {
+              "name": "punctuation.separator.gero-lang"
+            },
+            "2": {
+              "name": "constant.other.format-spec.gero-lang"
+            }
+          }
+        },
+        {
+          "include": "#string"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#constant"
+        },
+        {
+          "include": "#call"
+        },
+        {
+          "include": "#keyword-operator"
+        },
+        {
+          "include": "#operator"
+        },
+        {
+          "name": "variable.other.gero-lang",
+          "match": "[A-Za-z_][A-Za-z0-9_]*"
+        }
+      ]
+    },
+    "char": {
+      "name": "string.quoted.single.gero-lang",
+      "match": "'(?:\\\\(?:x[0-9A-Fa-f]{2}|[nrt0\\\\'])|[^'\\\\])'"
+    },
+    "declaration-name": {
+      "patterns": [
+        {
+          "match": "\\b(def)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.gero-lang"
+            },
+            "2": {
+              "name": "entity.name.function.gero-lang"
+            }
+          }
+        },
+        {
+          "match": "\\b(class|struct|enum)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.gero-lang"
+            },
+            "2": {
+              "name": "entity.name.type.gero-lang"
+            }
+          }
+        },
+        {
+          "match": "\\b(extends)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.gero-lang"
+            },
+            "2": {
+              "name": "entity.other.inherited-class.gero-lang"
+            }
+          }
+        },
+        {
+          "match": "\\b(case)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\(|$)",
+          "captures": {
+            "1": {
+              "name": "keyword.control.gero-lang"
+            },
+            "2": {
+              "name": "entity.name.function.constructor.gero-lang"
+            }
+          }
+        }
+      ]
+    },
+    "type-annotation": {
+      "patterns": [
+        {
+          "name": "support.type.primitive.gero-lang",
+          "match": "\\b(?:i8|u8|i16|u16|int|uint|fixed|bool|str|char)\\b"
+        },
+        {
+          "name": "keyword.other.fn-type.gero-lang",
+          "match": "\\bfn\\b"
+        },
+        {
+          "comment": "A capitalized name in a type position — after `:` or `->`.",
+          "match": "(?<=:|->)\\s*(&?)([A-Z][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.reference.gero-lang"
+            },
+            "2": {
+              "name": "entity.name.type.gero-lang"
+            }
+          }
+        },
+        {
+          "name": "entity.name.type.gero-lang",
+          "match": "\\bVec(?=\\()"
+        }
+      ]
+    },
+    "keyword-control": {
+      "name": "keyword.control.gero-lang",
+      "match": "\\b(?:if|elif|else|end|while|do|for|in|step|repeat|until|match|case|when|break|continue|return|defer)\\b"
+    },
+    "keyword-declaration": {
+      "name": "keyword.other.gero-lang",
+      "match": "\\b(?:let|const|def|lambda|class|extends|enum|struct|use|from|local|bake|print|asm|sizeof)\\b"
+    },
+    "keyword-operator": {
+      "name": "keyword.operator.word.gero-lang",
+      "match": "\\b(?:and|or|not|is|as)\\b"
+    },
+    "constant": {
+      "patterns": [
+        {
+          "name": "constant.language.gero-lang",
+          "match": "\\b(?:true|false|nil)\\b"
+        },
+        {
+          "name": "variable.language.gero-lang",
+          "match": "\\b(?:self|super)\\b"
+        }
+      ]
+    },
+    "number": {
+      "patterns": [
+        {
+          "comment": "$-prefixed hex, as in the assembler and the memory map.",
+          "name": "constant.numeric.hex.gero-lang",
+          "match": "\\$[0-9A-Fa-f][0-9A-Fa-f_]*"
+        },
+        {
+          "name": "constant.numeric.binary.gero-lang",
+          "match": "\\b0[bB][01][01_]*"
+        },
+        {
+          "name": "constant.numeric.fixed.gero-lang",
+          "match": "\\b[0-9][0-9_]*\\.[0-9][0-9_]*"
+        },
+        {
+          "name": "constant.numeric.decimal.gero-lang",
+          "match": "\\b[0-9][0-9_]*"
+        }
+      ]
+    },
+    "call": {
+      "patterns": [
+        {
+          "comment": "The bracket must touch the callee — a spaced `(` is not a call.",
+          "match": "([A-Za-z_][A-Za-z0-9_]*)(?=\\()",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.call.gero-lang"
+            }
+          }
+        }
+      ]
+    },
+    "operator": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arrow.gero-lang",
+          "match": "->|=>"
+        },
+        {
+          "name": "keyword.operator.range.gero-lang",
+          "match": "\\.\\.=?"
+        },
+        {
+          "name": "keyword.operator.assignment.gero-lang",
+          "match": "(?:\\+|-|\\*|/|%|&|\\||\\^|<<|>>)?="
+        },
+        {
+          "name": "keyword.operator.increment.gero-lang",
+          "match": "\\+\\+|--(?=\\s*$)"
+        },
+        {
+          "name": "keyword.operator.comparison.gero-lang",
+          "match": "==|!=|<=|>=|<|>"
+        },
+        {
+          "name": "keyword.operator.arithmetic.gero-lang",
+          "match": "\\+|-|\\*|/|%"
+        },
+        {
+          "name": "keyword.operator.bitwise.gero-lang",
+          "match": "<<|>>|&|\\||\\^|~"
+        },
+        {
+          "name": "keyword.operator.nullable.gero-lang",
+          "match": "\\?"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "comment": "A loop label trailing a head, or a `break :label`.",
+          "match": "(:)([a-z][A-Za-z0-9_]*)(?=\\s*(?:--.*)?$)",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.label.gero-lang"
+            },
+            "2": {
+              "name": "entity.name.label.gero-lang"
+            }
+          }
+        },
+        {
+          "name": "punctuation.separator.gero-lang",
+          "match": "[,:;.]"
+        },
+        {
+          "name": "punctuation.section.brackets.gero-lang",
+          "match": "[\\[\\](){}]"
+        }
+      ]
+    },
+    "variant-path": {
+      "comment": "`Enum.Variant` / `Class.method` — a dotted path off a type name.",
+      "match": "\\b([A-Z][A-Za-z0-9_]*)(\\.)([A-Za-z_][A-Za-z0-9_]*)",
+      "captures": {
+        "1": {
+          "name": "entity.name.type.gero-lang"
+        },
+        "2": {
+          "name": "punctuation.separator.gero-lang"
+        },
+        "3": {
+          "name": "variable.other.constant.gero-lang"
+        }
+      }
+    },
+    "loop-label": {
+      "comment": "`break :label` / `continue :label`. Must precede `keyword-control`, which would otherwise claim the keyword and leave the label bare.",
+      "match": "\\b(break|continue)\\s+(:)([a-z][A-Za-z0-9_]*)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.gero-lang"
+        },
+        "2": {
+          "name": "punctuation.definition.label.gero-lang"
+        },
+        "3": {
+          "name": "entity.name.label.gero-lang"
+        }
+      }
+    }
+  }
+}

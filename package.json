@@ -1,14 +1,16 @@
 {
   "name": "gero-asm",
-  "displayName": "Gero Assembly",
-  "description": "Syntax highlighting and editor support for the Gero VM assembly language (.gas).",
-  "version": "0.4.0",
+  "displayName": "Gero",
+  "description": "Syntax highlighting, diagnostics and navigation for the Gero VM assembly language (.gas) and gero-lang (.gr).",
+  "version": "0.5.0",
   "publisher": "salty-max",
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Linters",
+    "Formatters"
   ],
   "keywords": [
     "gero",
@@ -62,6 +64,44 @@
         "scopeName": "source.gero-lang",
         "path": "./grammars/gero-lang.tmLanguage.json"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Gero",
+      "properties": {
+        "gero.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Absolute path to the `gero` binary. Empty resolves `gero` on `PATH`."
+        },
+        "gero.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Trace the JSON-RPC conversation with the language server, in the Gero Language Server output channel."
+        }
+      }
+    }
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:gero-asm",
+    "onLanguage:gero-lang"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.6.0"
   }
 }

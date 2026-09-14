@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.5.0 — 2026-09-14
+
+Wires the extension to `gero lsp`, so a buffer gets diagnostics and
+navigation rather than colour alone.
+
+- `src/extension.ts` spawns `gero lsp` over stdio and routes both
+  language ids through one client, the way the server serves them.
+- Diagnostics, go-to-definition, hover, find-references, completion,
+  inlay hints, formatting and quick-fix code actions, for `.gr` and —
+  except hints and code actions, which it has no data for — `.gas`.
+- `gero.path` setting for a binary that is not on `PATH`. A missing
+  binary says so in a notification and the status bar rather than
+  leaving a server that never answers.
+- `gero.trace.server` setting for the JSON-RPC conversation, in the
+  extension's own output channel.
+- Status bar item reflecting the client's connection state.
+- The extension now ships compiled JavaScript, so `node_modules` is no
+  longer excluded from the package — it held the runtime client.
+
+
 ## 0.4.0 — 2026-09-08
 
 Adds `.gr` — the extension covered the assembler only until now, so a

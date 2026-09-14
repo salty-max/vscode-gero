@@ -1,6 +1,8 @@
 .vscode/**
 .vscode-test/**
-node_modules/**
+src/**
+tsconfig.json
+**/*.ts
 .gitignore
 .gitattributes
 .git/**
@@ -9,4 +11,7 @@ node_modules/**
 **/.eslintrc*
 *.vsix
 test/**
+src/**
+tsconfig.json
+**/*.ts
 images/raw/**

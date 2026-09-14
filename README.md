@@ -40,6 +40,10 @@ Point `gero.path` at the binary if it is not on your `PATH`.
 | `gero.path` | `""` | Absolute path to the `gero` binary. Empty resolves `gero` on `PATH`. |
 | `gero.trace.server` | `"off"` | `messages` or `verbose` logs the JSON-RPC conversation to the **Gero Language Server** output channel. |
 
+In a folder you have not trusted, `gero.path` is ignored and the
+server is whichever `gero` your PATH or user settings resolve to — a
+checkout cannot choose the binary that runs on your machine.
+
 This extension tracks the specs in the
 [gero repository](https://github.com/salty-max/gero/tree/main/docs).
 When they bump, this extension bumps in lockstep.

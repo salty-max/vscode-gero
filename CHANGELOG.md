@@ -18,6 +18,10 @@ navigation rather than colour alone.
 - Status bar item reflecting the client's connection state.
 - The extension now ships compiled JavaScript, so `node_modules` is no
   longer excluded from the package — it held the runtime client.
+- Declares limited support for untrusted workspaces, so colour and the
+  language server work in a folder opened for browsing. `gero.path` is
+  a restricted configuration there: a checkout cannot name the binary
+  that gets spawned by shipping its own `.vscode/settings.json`.
 
 
 ## 0.4.0 — 2026-09-08

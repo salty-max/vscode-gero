@@ -93,6 +93,11 @@ function setStatus(text: string, tooltip: string): void {
  *
  * Returns `undefined` when neither runs, so activation can say so
  * rather than leaving a server that never answers.
+ *
+ * `gero.path` is declared a restricted configuration, so in a folder
+ * the user has not trusted VS Code hands back the user-level value
+ * and never the workspace's — a checkout cannot choose the binary
+ * that gets spawned by shipping its own `.vscode/settings.json`.
  */
 function resolveBinary(): string | undefined {
   const configured = workspace.getConfiguration("gero").get<string>("path");

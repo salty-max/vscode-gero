@@ -1,24 +1,48 @@
-# Gero Assembly for VS Code
+# Gero for VS Code
 
-Syntax highlighting and editor support for the
-[Gero VM](https://github.com/salty-max/gero) assembly language
-(`.gas`).
+Editor support for the [Gero VM](https://github.com/salty-max/gero):
+the assembly language (`.gas`) and gero-lang (`.gr`).
 
 ![gero-asm preview](https://raw.githubusercontent.com/salty-max/vscode-gero/main/images/preview.png)
 
 ## Features
 
-- **Syntax highlighting** for all 52 ISA mnemonics, 9 directives,
-  registers, bracketed addressing, `@SYM` symbol references,
-  global + local labels (`.foo:`), character / string literals,
-  and `<Type> obj.prop` casts
-- **Comment toggle** with `Cmd+/` (or `Ctrl+/`) using `;`
-- **Auto-closing pairs** for `()`, `[]`, `{}`, `<>`, `"`, `'`
-- **File association** for `.gas` out of the box
+Colour comes from the extension; everything else comes from
+`gero lsp`, which it spawns for you.
 
-This extension tracks the
-[gero v0.1-final asm spec](https://github.com/salty-max/gero/blob/main/docs/asm-spec.md).
-When the spec bumps, this extension bumps in lockstep.
+- **Syntax highlighting** for both languages — every ISA mnemonic,
+  directive, register, bracketed addressing mode, `@SYM` reference,
+  global and local label, and `<Type> obj.prop` cast in `.gas`; the
+  keywords, primitives, annotations, literals and interpolated
+  strings in `.gr`
+- **Diagnostics** as you type, identical to what `gero check` reports
+- **Go-to-definition, hover and find-references**, answered from the
+  compiler's own tables rather than a second guess at the same names.
+  Hovering a name in `.gas` reports the address it assembled to
+- **Completion**, including names you have not imported yet —
+  accepting one writes the `use` line for you
+- **Quick fixes** for a misspelled name, a missing import, and an
+  import nothing uses (`.gr`)
+- **Inlay hints** showing the inferred type of an unannotated `let`
+  (`.gr`)
+- **Formatting**, identical to what `gero fmt` writes
+- **Comment toggle** with `Cmd+/` — `;` in `.gas`, `--` in `.gr`
+- **Auto-closing pairs** and file association for both extensions
+
+The language server has to be installed separately: see
+[installing gero](https://github.com/salty-max/gero/blob/main/docs/tooling.md).
+Point `gero.path` at the binary if it is not on your `PATH`.
+
+## Settings
+
+| Setting | Default | What it does |
+|---|---|---|
+| `gero.path` | `""` | Absolute path to the `gero` binary. Empty resolves `gero` on `PATH`. |
+| `gero.trace.server` | `"off"` | `messages` or `verbose` logs the JSON-RPC conversation to the **Gero Language Server** output channel. |
+
+This extension tracks the specs in the
+[gero repository](https://github.com/salty-max/gero/tree/main/docs).
+When they bump, this extension bumps in lockstep.
 
 ## Install
 
@@ -41,28 +65,31 @@ code --install-extension gero-asm-<version>.vsix
 ## Develop
 
 ```bash
-# Symlink into your extensions directory for live testing
-ln -s "$(pwd)" ~/.vscode/extensions/salty-max.gero-asm-dev
+npm install
+npm run compile          # or: npm run watch
+npx vsce package         # produces gero-asm-<version>.vsix
+code --install-extension gero-asm-*.vsix --force
 ```
 
-Then reload VS Code (`Cmd+Shift+P` → "Reload Window"). Edit the
-grammar or language config and reload again to see changes.
+Reload VS Code (`Cmd+Shift+P` → "Reload Window") to pick up a new
+build. A grammar or language-config change needs only the reload; a
+change under `src/` needs a recompile first.
 
-To package a `.vsix`:
-
-```bash
-npx vsce package
-```
+To see what the client and server are saying to each other, set
+`gero.trace.server` to `verbose` and open the **Gero Language Server**
+output channel.
 
 ## Roadmap
 
-- LSP integration (planned for v0.2, alongside
-  [gero v0.3](https://github.com/salty-max/gero/issues/122) —
-  `gero lsp` server reusing `gero check` / `gero fmt`)
+- Publish to the marketplace
 - Snippets for common patterns (`hlt`, `int $10`, `call/ret`)
-- Tree-sitter highlighting (already available for Neovim / Helix /
-  Zed via
-  [tree-sitter-gero-asm](https://github.com/salty-max/tree-sitter-gero-asm))
+- Bundle with esbuild, once the dependency footprint justifies it
+
+Neovim, Helix and Zed get highlighting from the tree-sitter grammars
+instead —
+[gero-asm](https://github.com/salty-max/tree-sitter-gero-asm) and
+[gero-lang](https://github.com/salty-max/tree-sitter-gero-lang) — and
+the same server through their own LSP config.
 
 ## License
 

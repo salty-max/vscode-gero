@@ -28,6 +28,33 @@
     "url": "https://github.com/salty-max/gero/issues"
   },
   "license": "MIT",
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:gero-asm",
+    "onLanguage:gero-lang"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.6.0"
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "restrictedConfigurations": [
+        "gero.path"
+      ],
+      "description": "Colour and the language server run in a folder you have not trusted. `gero.path` is ignored there, so a workspace cannot name the binary that gets spawned \u2014 the server is whichever `gero` your PATH or user settings resolve to."
+    }
+  },
   "contributes": {
     "languages": [
       {
@@ -85,23 +112,5 @@
         }
       }
     }
-  },
-  "main": "./out/extension.js",
-  "activationEvents": [
-    "onLanguage:gero-asm",
-    "onLanguage:gero-lang"
-  ],
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
-  },
-  "dependencies": {
-    "vscode-languageclient": "^9.0.1"
-  },
-  "devDependencies": {
-    "@types/node": "^22.0.0",
-    "@types/vscode": "^1.85.0",
-    "typescript": "^5.6.0"
   }
 }
